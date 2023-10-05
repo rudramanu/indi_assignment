@@ -1,8 +1,9 @@
 const express = require("express");
 const { BookModel } = require("../models/book.model");
+const { authentication } = require("../middleware/authentication");
 const bookRouter = express.Router();
 
-bookRouter.post("/add", async (req, res) => {
+bookRouter.post("/add", authentication, async (req, res) => {
   const payload = req.body;
   try {
     const existingBook = await BookModel.findOne({ ISBN: payload.ISBN });

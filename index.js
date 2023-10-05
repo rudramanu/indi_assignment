@@ -1,7 +1,9 @@
 const express = require("express");
+
 const { connection } = require("./configs/db");
 const { userRouter } = require("./routes/user.route");
 const { bookRouter } = require("./routes/book.route");
+const { borrowRouter } = require("./routes/borrowHistory.route");
 
 const cors = require("cors");
 const app = express();
@@ -15,6 +17,7 @@ app.use("/home", (req, res) => {
 });
 app.use("/user", userRouter);
 app.use("/book", bookRouter);
+app.use("/borrow", borrowRouter);
 
 app.listen(process.env.port, async () => {
   try {
