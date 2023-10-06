@@ -14,7 +14,7 @@ bookRouter.post("/add", authentication, async (req, res) => {
     } else {
       const book = new BookModel(payload);
       await book.save();
-      res.send({ message: "Product added" });
+      res.send({ message: "Book added" });
     }
   } catch (error) {
     return res.status(500).send({ message: error.message });
@@ -26,7 +26,7 @@ bookRouter.put("/update/:id", authentication, async (req, res) => {
   const update = req.body;
   try {
     await BookModel.findByIdAndUpdate(id, update);
-    res.send({ message: "Product Updated Sucessfully" });
+    res.send({ message: "Book Updated Sucessfully" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }
@@ -36,7 +36,7 @@ bookRouter.delete("/delete/:id", authentication, async (req, res) => {
   let id = req.params.id;
   try {
     await BookModel.findByIdAndDelete(id);
-    res.send({ message: "Product Removed Sucessfully" });
+    res.send({ message: "Book Removed Sucessfully" });
   } catch (error) {
     res.status(500).send({ message: error.message });
   }

@@ -8,7 +8,7 @@ This document provides detailed information about the API endpoints and operatio
 
 The base URL for this API is:
 
-- `http://localhost:YOUR_PORT` (Update `YOUR_PORT` with the actual port where your API is running)
+- `http://localhost:9300`
 
 ## Paths
 
@@ -62,7 +62,7 @@ The base URL for this API is:
   - `publishedYear` (integer): The year the book was published
   - `quantity` (integer): The quantity of the book
 - **Responses**:
-  - `200`: Product added
+  - `200`: Book added
   - `500`: Internal Server Error
 
 ### `/book/update/{id}`
@@ -79,7 +79,7 @@ The base URL for this API is:
   - `publishedYear` (integer): The year the book was published
   - `quantity` (integer): The quantity of the book
 - **Responses**:
-  - `200`: Product Updated Successfully
+  - `200`: Book Updated Successfully
   - `500`: Internal Server Error
 
 ### `/book/delete/{id}`
@@ -90,7 +90,7 @@ The base URL for this API is:
 - **Path Parameter**:
   - `id` (string, required): The ID of the book to be deleted
 - **Responses**:
-  - `200`: Product Removed Successfully
+  - `200`: Book Removed Successfully
   - `500`: Internal Server Error
 
 ### `/book/get`
