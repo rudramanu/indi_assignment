@@ -1,0 +1,306 @@
+openapi: 3.0.0
+info:
+  title: Library Management System
+  description: All APIs for Library Management System is working fine
+  version: 1.0.0
+servers:
+  - url: http://localhost:9300/
+paths:
+  /home:
+    get:
+      summary: Check if APIs are working
+      responses:
+        "200":
+          description: API is working
+  /user/register:
+    post:
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: User Registered
+        "409":
+          description: Conflict - User already exists or missing fields
+        "500":
+          description: Internal Server Error
+  /user/login:
+    post:
+      summary: Login as a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  name:
+                    type: string
+                  token:
+                    type: string
+        "404":
+          description: User not found
+        "403":
+          description: Wrong credentials
+        "409":
+          description: Conflict - Missing fields
+        "500":
+          description: Internal Server Error
+  /book/add:
+    post:
+      summary: Add a new book
+      security:
+        - apiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ISBN:
+                  type: string
+                title:
+                  type: string
+                author:
+                  type: string
+                publishedYear:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        "200":
+          description: Product added
+        "500":
+          description: Internal Server Error
+  /book/update/{id}:
+    put:
+      summary: Update a book
+      security:
+        - apiKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ISBN:
+                  type: string
+                title:
+                  type: string
+                author:
+                  type: string
+                publishedYear:
+                  type: integer
+                quantity:
+                  type: integer
+      responses:
+        "200":
+          description: Product Updated Successfully
+        "500":
+          description: Internal Server Error
+  /book/delete/{id}:
+    delete:
+      summary: Delete a book
+      security:
+        - apiKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Product Removed Successfully
+        "500":
+          description: Internal Server Error
+  /book/get:
+    get:
+      summary: Get all available books
+      responses:
+        "200":
+          description: List of available books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ISBN:
+                      type: string
+                    title:
+                      type: string
+                    author:
+                      type: string
+                    publishedYear:
+                      type: integer
+                    quantity:
+                      type: integer
+                    isAvailable:
+                      type: boolean
+        "500":
+          description: Internal Server Error
+  /book/search:
+    get:
+      summary: Search for books
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ISBN:
+                      type: string
+                    title:
+                      type: string
+                    author:
+                      type: string
+                    publishedYear:
+                      type: integer
+                    quantity:
+                      type: integer
+                    isAvailable:
+                      type: boolean
+        "500":
+          description: Internal Server Error
+  /history/borrow/{bookId}:
+    post:
+      summary: Borrow a book
+      security:
+        - apiKey: []
+      parameters:
+        - name: bookId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        "200":
+          description: You just borrowed a book
+        "400":
+          description: Bad Request - Maximum limit reached
+        "404":
+          description: Book not found or not available for borrowing
+        "500":
+          description: Internal Server Error
+  /history/return/{borrowId}:
+    post:
+      summary: Return a borrowed book
+      security:
+        - apiKey: []
+      parameters:
+        - name: borrowId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+      responses:
+        "200":
+          description: Book returned successfully
+        "404":
+          description: Borrowing record not found
+        "500":
+          description: Internal Server Error
+  /history/recommendations:
+    get:
+      summary: Get book recommendations
+      security:
+        - apiKey: []
+      parameters:
+        - name: userId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Recommended books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ISBN:
+                      type: string
+                    title:
+                      type: string
+                    author:
+                      type: string
+                    publishedYear:
+                      type: integer
+                    quantity:
+                      type: integer
+                    isAvailable:
+                      type: boolean
+        "500":
+          description: Internal Server Error
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: Authorization

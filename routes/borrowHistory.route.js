@@ -15,7 +15,7 @@ borrowRouter.post("/borrow/:bookId", authentication, async (req, res) => {
       userId,
       returnDate: null,
     });
-    console.log(borrowedBooksCount.length);
+    // console.log(borrowedBooksCount.length);
     if (borrowedBooksCount.length >= 3) {
       return res.status(400).send({
         message: "You have reached the maximum limit for borrowed books.",
@@ -72,6 +72,29 @@ borrowRouter.post("/return/:borrowId", authentication, async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+borrowRouter.get("/recommendations", authentication, async (req, res) => {
+  const userId = req.body.userId;
+
+  const userBorrowedBooks = await BorrowHistoryModel.find({
+    userId,
+    returnDate: { $ne: null },
+  });
+  console.log(userBorrowedBooks);
+
+  const bookIds = userBorrowedBooks.map((el) => {
+    return el.bookId;
+  });
+  const borrowedBooksAuthors = await BookModel.distinct("author", {
+    _id: { $in: bookIds },
+  });
+  // res.send(borrowedBooksAuthors);["H C Verma","Vikas Rahi"]
+
+  const recommendedBooks = await BookModel.find({
+    author: { $in: borrowedBooksAuthors },
+  });
+  res.json(recommendedBooks);
 });
 
 module.exports = { borrowRouter };

@@ -21,7 +21,7 @@ bookRouter.post("/add", authentication, async (req, res) => {
   }
 });
 
-bookRouter.put("/update/:id", async (req, res) => {
+bookRouter.put("/update/:id", authentication, async (req, res) => {
   let id = req.params.id;
   const update = req.body;
   try {
@@ -32,7 +32,7 @@ bookRouter.put("/update/:id", async (req, res) => {
   }
 });
 
-bookRouter.delete("/delete/:id", async (req, res) => {
+bookRouter.delete("/delete/:id", authentication, async (req, res) => {
   let id = req.params.id;
   try {
     await BookModel.findByIdAndDelete(id);
@@ -46,6 +46,22 @@ bookRouter.get("/get", async (req, res) => {
   try {
     const books = await BookModel.find({ isAvailable: true });
     return res.send(books);
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+});
+
+bookRouter.get("/search", async (req, res) => {
+  const searchWord = req.query.q;
+  try {
+    const searchResults = await BookModel.find({
+      $or: [
+        { title: { $regex: searchWord, $options: "i" } },
+        { author: { $regex: searchWord, $options: "i" } },
+        { ISBN: { $regex: searchWord, $options: "i" } },
+      ],
+    });
+    res.send(searchResults);
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }

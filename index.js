@@ -4,6 +4,8 @@ const { connection } = require("./configs/db");
 const { userRouter } = require("./routes/user.route");
 const { bookRouter } = require("./routes/book.route");
 const { borrowRouter } = require("./routes/borrowHistory.route");
+const { apiLimiter } = require("./middleware/ratelimiter");
+const { swaggerServe, swaggerSetup } = require("./config");
 
 const cors = require("cors");
 const app = express();
@@ -15,9 +17,11 @@ require("dotenv").config();
 app.use("/home", (req, res) => {
   res.send("APIs are working");
 });
+app.use("/api-docs", swaggerServe, swaggerSetup);
+app.use(apiLimiter);
 app.use("/user", userRouter);
 app.use("/book", bookRouter);
-app.use("/borrow", borrowRouter);
+app.use("/history", borrowRouter);
 
 app.listen(process.env.port, async () => {
   try {
