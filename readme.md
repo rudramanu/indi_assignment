@@ -21,6 +21,11 @@ To get started with this API, follow these steps:
 5. Start the API server using the provided command. Use command `npm run server`.
 6. Use the documented endpoints which is provided below to interact with the API.
 
+## swagger-ui looks like this:
+
+![Alt text](allAPIs.JPG)
+![Alt text](detailedAPI.JPG)
+
 ## Paths
 
 ### `/home`
