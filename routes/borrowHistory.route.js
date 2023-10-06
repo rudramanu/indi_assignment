@@ -81,7 +81,7 @@ borrowRouter.get("/recommendations", authentication, async (req, res) => {
     userId,
     returnDate: { $ne: null },
   });
-  console.log(userBorrowedBooks);
+  // console.log(userBorrowedBooks);
 
   const bookIds = userBorrowedBooks.map((el) => {
     return el.bookId;
