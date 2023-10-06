@@ -2,13 +2,24 @@
 
 ## Overview
 
-This document provides detailed information about the API endpoints and operations for your API titled "Your API Title." This API allows users to perform various actions related to user registration, authentication, book management, and borrowing history.
+This document provides detailed information about the API endpoints and operations. This API allows users to perform various actions related to user registration, authentication, book management, and borrowing history etc.
 
 ### Base URL
 
 The base URL for this API is:
 
 - `http://localhost:9300`
+
+### Getting Started
+
+To get started with this API, follow these steps:
+
+1. Ensure you have the necessary prerequisites (e.g., Node.js).
+2. Clone this repository to your local machine.
+3. Install the required dependencies using the provided `package.json` file. To install all dependencies just run `npm i`.
+4. Configure your environment variables, including database connection details and any secret keys required for authentication.
+5. Start the API server using the provided command. Use command `npm run server`.
+6. Use the documented endpoints which is provided below to interact with the API.
 
 ## Paths
 
