@@ -23,7 +23,12 @@ To get started with this API, follow these steps:
 
 ## swagger-ui looks like this:
 
+### All APIs endpoints
+
 ![Alt text](allAPIs.JPG)
+
+### Detailed API
+
 ![Alt text](detailedAPI.JPG)
 
 ## Paths
