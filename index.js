@@ -17,7 +17,9 @@ require("dotenv").config();
 app.use("/home", (req, res) => {
   res.send("APIs are working");
 });
+
 app.use("/api-docs", swaggerServe, swaggerSetup);
+
 app.use(apiLimiter);
 app.use("/user", userRouter);
 app.use("/book", bookRouter);
