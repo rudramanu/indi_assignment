@@ -10,6 +10,12 @@ The base URL for this API is:
 
 - `http://localhost:9300`
 
+### Deployed URL
+
+The deployed URL for this API is:
+
+- `http://localhost:9300`
+
 ### Getting Started
 
 To get started with this API, follow these steps:
